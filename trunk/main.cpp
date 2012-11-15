@@ -29,7 +29,7 @@ class character : public obj::objectBase
 };
 
 
-void drawDeviders(SDL_Surface* sur)
+void drawDividers(SDL_Surface* sur)
 {
     // Top line
     for(int x = 0; x < 640; x++)
@@ -118,7 +118,7 @@ int main()
         //basicfont.drawstr(gwin.screen, 0, 0, 255, 100, 100, "= THE DUNGEONS OF DREMIN =");
         //basicfont.draw(gwin.screen, x, 1, 255, 255, 255, 'D');
 
-        drawDeviders(gwin.screen);
+        drawDividers(gwin.screen);
         basicfont.drawstr(gwin.screen, 450, 160, 255, 100, 100, "HP");
 
 
