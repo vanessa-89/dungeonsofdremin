@@ -1,6 +1,6 @@
 #ifndef GRAPHICS_HPP_INCLUDED
 #define GRAPHICS_HPP_INCLUDED
-#include <sdl.h>
+#include #include "../include/sdl/sdl.h"
 
 // Graphics.hpp - Luke Connor 11/8/12
 // Graphics functions for sdl games with pixel manipulation.
