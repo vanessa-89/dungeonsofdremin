@@ -68,7 +68,7 @@ void drawDividers(SDL_Surface* sur)
         pix::put_pixel16(sur, 450, y, 255, 255, 255);
     }
 
-    // Right half devider
+    // Right half divider
     for(int x = 450; x < 640; x++)
     {
         pix::put_pixel16(sur, x, 150, 255, 255, 255);
