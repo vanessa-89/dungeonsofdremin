@@ -1,0 +1,6 @@
+BUILD
+source\main.cpp
+LINK
+lib\sdl\libSDL.dll.a
+lib\sdl-ttf\SDL_ttf.lib
+lib\sdl-mixer\SDL_mixer.lib
