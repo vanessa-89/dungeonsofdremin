@@ -3,8 +3,8 @@
 #include <cmath>
 
 #include "graphics.hpp"
-#include "objects.hpp"
 #include "fonts.hpp"
+#include "objects.hpp"
 
 #undef main
 //commit test
