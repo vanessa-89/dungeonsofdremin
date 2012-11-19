@@ -1,5 +1,5 @@
 BUILD
-source\main.cpp
+source\trunk\main.cpp
 LINK
 lib\sdl\libSDL.dll.a
 lib\sdl-ttf\SDL_ttf.lib
