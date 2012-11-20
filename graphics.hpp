@@ -25,7 +25,7 @@ namespace pix
             //Set the pixel
             pixels[ ( y * surface->w ) + x ] = SDL_MapRGB(surface->format, r, g, b);
         }
-
+		
         class window
         {
             public:
