@@ -60,13 +60,13 @@ void drawDividers(SDL_Surface* sur)
     // Mid line x
     for(int x = 0; x < 640; x++)
     {
-        pix::put_pixel16(sur, x, 340, 255, 255, 255);
+        pix::put_pixel16(sur, x, 340, 255, 255, 0);
     }
 
     // Mid line y
     for(int y = 0; y < 480; y++)
     {
-        pix::put_pixel16(sur, 450, y, 255, 255, 255);
+        pix::put_pixel16(sur, 450, y, 255, 0, 255);
     }
 
     // Right half divider
