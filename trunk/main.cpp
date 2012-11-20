@@ -5,6 +5,7 @@
 #include "graphics.hpp"
 #include "fonts.hpp"
 #include "objects.hpp"
+#include "tilemanager.hpp"
 
 #undef main
 //commit test
