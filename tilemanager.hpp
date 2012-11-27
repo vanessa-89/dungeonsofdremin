@@ -12,16 +12,18 @@ namespace tiles
 	class tile
 	{
 		public:
+		Uint16 frames[255][16][16]; // Store frame data
+		vector<int> contents; // Item ID's stored in this tile
 
-		Uint16 frames[255][16][16];
-		vector<int> contents;
-
+        // Lighting flags and values
 		bool lightenabled;
 		int lightintensity;
-		bool collision;
-		char frame;
 
-		unsigned int id;
+		bool collision; // Collide with this tile?
+
+		char frame; // Current frame
+
+		unsigned int Tid; // Tile ID
 
 		tile()
 		{
@@ -30,16 +32,25 @@ namespace tiles
 
 		void draw(SDL_Surface* sur, int x, int y)
 		{
+			// vars
+			// x - x offset
+			// y - y offset
+			// sx - surface x pos
+			// sy - surface y pos
+
+			// Color storage
 			Uint8* r;
 			Uint8* g;
 			Uint8* b;
 
-			for(int x = 0; x < 16; x++)
+			for(int x = 0; sx < 16; sx++)
 			{
-				for(int y = 0; y < 16; y++)
+				for(int y = 0; sy < 16; sy++)
 				{
-					SDL_GetRGB(frames[frame][x][y], sur->format, r, g, g);
-					pix::put_pixel16(sur, x, y, (int)*r, (int)*g, (int)*b);
+					// Get the RGB color from a pixel in the frame data
+					SDL_GetRGB(frames[frame][sx][sy], sur->format, r, g, b);
+                    // Output the data with offsets (x and y)
+					pix::put_pixel16(sur, sx+x, sy+y, (int)*r, (int)*g, (int)*b);
 				}
 			}
 		}
