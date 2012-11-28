@@ -16,8 +16,7 @@ namespace tiles
 		vector<int> contents; // Item ID's stored in this tile
 
         // Lighting flags and values
-		bool lightenabled;
-		int lightintensity;
+		bool lightenabled; // Can this tile be lit?
 
 		bool collision; // Collide with this tile?
 
@@ -66,7 +65,7 @@ namespace tiles
 		{
 
 		}
-
+        // For every tile in tiledat, call its draw function with the proper offsets
 		void draw(SDL_Surface* sur, int x, int y)
 		{
 			for(int xs = 0; xs < 28; xs++)
@@ -79,30 +78,6 @@ namespace tiles
 		}
 
 
-	};
-
-	class light
-	{
-		// Needs testing
-		int x;
-		int y;
-
-		int radius;
-		int brightness;
-
-		void calc(tilemap &data)
-		{
-			for(int xs = 0; xs < radius/2; xs++)
-			{
-				for(int ys = 0; ys < radius/2; ys++)
-				{
-					if(data.tiledat[xs+x][ys+y].lightenabled == true)
-					{
-						data.tiledat[xs+x][ys+y].lightintensity = brightness;
-					}
-				}
-			}
-		}
 	};
 
 }
