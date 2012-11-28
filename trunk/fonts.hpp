@@ -32,7 +32,7 @@ namespace bff_font
             {
                 file.close();
                 cout << "Error: Could Not Find Font File " << fname << endl;
-                return 1;
+                exit(1);
             }
 
             int letter = 0;

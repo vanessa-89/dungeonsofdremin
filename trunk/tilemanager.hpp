@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "graphics.hpp"
+#include "items.hpp"
 using namespace std;
 
 namespace tiles
