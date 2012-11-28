@@ -12,25 +12,6 @@
 
 using namespace std;
 
-class character : public obj::objectBase
-{
-    public:
-    SDL_PixelFormat* pixform;
-
-    character(SDL_PixelFormat* pix)
-    {
-        pixform = pix;
-    }
-
-    string name;
-    int hp;
-    int magic;
-    int armor;
-
-
-};
-
-
 void drawDividers(SDL_Surface* sur)
 {
     // Top line
@@ -97,35 +78,38 @@ int main()
 
     bff_font::font basicfont;
     basicfont.load("Media/Midevil.bff");
-
-
-    character chest(gwin.screen->format);
-    chest.load("chest.pfo");
-
-
+	
+	// Temporary tile defintion for testing
+	tiles::tile tmptile;
+	tmptile.clear();
+	
+	tmptile.frames[0][0][0] = 12435;
+	tmptile.frames[0][0][16] = 12435;
+	tmptile.frames[0][16][0] = 12435;
+	tmptile.frames[0][16][16] = 12435;
+	
+	tmptile.frames[0][8][8] = 1249456;
+	
+	// Create map
+	tiles::tilemap map;
+	
+	// Tmp
+	for(int sx = 0; sx < 28; sx++)
+	{
+		for(int sy = 0; sy < 21; sy++)
+		{
+			map.tiledat[sx][sy] = &tmptile;
+		}
+	}
+	
+	
     cout << endl;
     cout << "Entering main loop..." << endl;
     bool running = true;
     float x = 0;
     while(running)
     {
-        SDL_LockSurface(gwin.screen);
-        gwin.clear();
-
-
-
-
-
-        //mainchar.draw(gwin.screen, 0, 0);
-        //basicfont.drawstr(gwin.screen, 0, 0, 255, 100, 100, "= THE DUNGEONS OF DREMIN =");
-        //basicfont.draw(gwin.screen, x, 1, 255, 255, 255, 'D');
-
-        drawDividers(gwin.screen);
-        basicfont.drawstr(gwin.screen, 450, 160, 255, 100, 100, "HP");
-
-
-
-        // poll and shandle events
+        // poll and handle events
         while( SDL_PollEvent( &event ) )
         {
             keystates = SDL_GetKeyState( NULL ); // Update keystates
@@ -138,8 +122,24 @@ int main()
                 running = false;
             }
         }
+		
+		// Lock the screen surface and clear it, then do drawing 
+		SDL_LockSurface(gwin.screen);
+        gwin.clear();
 
+        //mainchar.draw(gwin.screen, 0, 0);
+        //basicfont.drawstr(gwin.screen, 0, 0, 255, 100, 100, "= THE DUNGEONS OF DREMIN =");
+        //basicfont.draw(gwin.screen, x, 1, 255, 255, 255, 'D');
 
+        drawDividers(gwin.screen);
+        basicfont.drawstr(gwin.screen, 450, 160, 255, 100, 100, "HP");
+		
+		// Draw the tilemap
+		map.draw(gwin.screen, 2, 2);
+		//tmptile.draw(gwin.screen, 0, 0);
+		
+		
+		// Unlock screen surface so we can update the screen
         SDL_UnlockSurface(gwin.screen);
 
         // update screen
