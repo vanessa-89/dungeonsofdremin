@@ -5,7 +5,7 @@
 
 #include "graphics.hpp"
 #include "fonts.hpp"
-#include "objects.hpp"
+#include "sprites.hpp"
 #include "tilemanager.hpp"
 #include "items.hpp"
 
