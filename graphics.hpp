@@ -1,14 +1,16 @@
 #ifndef GRAPHICS_HPP_INCLUDED
 #define GRAPHICS_HPP_INCLUDED
 #include "../../include/sdl/sdl.h"
+#include "../../include/sdl/begin_code.h"
+#include "../../include/sdl/close_code.h"
+#include "../../include/sdl-ttf/sdl_ttf.h"
 
 // Graphics.hpp - Luke Connor 11/8/12
 // Graphics functions for sdl games with pixel manipulation.
 
 namespace pix
 {
-
-        Uint16 get_pixel16( SDL_Surface *surface, int x, int y )
+		Uint16 get_pixel16( SDL_Surface *surface, int x, int y )
         {
             //Convert the pixels to 16 bit
             Uint16 *pixels = (Uint16 *)surface->pixels;
@@ -67,13 +69,7 @@ namespace pix
 
             void clear()
             {
-                for(int x = 0; x < xres; x++)
-                {
-                    for(int y = 0; y < yres; y++)
-                    {
-                        put_pixel16(screen, x, y, 0, 0, 0);
-                    }
-                }
+                SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 0, 0, 0));
             }
 
             void update()
