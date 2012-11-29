@@ -69,7 +69,7 @@ int main()
     //SDL_ShowCursor(0); // Hide courser
     cout << "Opening Window..." << endl;
     pix::window gwin;
-    gwin.open(640, 480, 16, true);
+    gwin.open(640, 480, 16, false);
     cout << endl;
 
     SDL_Event event;
@@ -151,12 +151,12 @@ int main()
             if( event.type == SDL_QUIT ) // if x pressed, exit
             {
                 cout << "Exit initiated." << endl;
-                                running = false;
+                running = false;
             }
             if(keystates[SDLK_ESCAPE]) // if esc pressed, exit
             {
                 cout << "Exit initiated." << endl;
-                                running = false;
+                running = false;
             }
         }
                 

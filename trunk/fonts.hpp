@@ -54,7 +54,8 @@ namespace ttf_font
 			SDL_Surface* message = NULL;
 			SDL_Color Fcolor = { r, g, b };
 			SDL_Color Bcolor = { 0, 0, 0 };
-			if(Fcolor.r == 0 && Fcolor.g == 0 && Fcolor.b == 0) Bcolor.r = 255;
+			// If the text color is black, change the alpha
+			if(Fcolor.r == 0 && Fcolor.g == 0 && Fcolor.b == 0) Bcolor.b = 1;
 	
 			
 			message = TTF_RenderText_Shaded(fontd, str.c_str(), Fcolor, Bcolor);
@@ -72,6 +73,7 @@ namespace ttf_font
 					pv = pix::get_pixel16(message, y, x);
 					SDL_GetRGB(pv, message->format, &tr,&tg,&tb);
 					
+					// Check if its the alpha color
 					if(tr == Bcolor.r && tg == Bcolor.g && tb == Bcolor.b) continue;
 					pix::put_pixel16(sur, y+xd, x+yd, tr, tg, tb);
 				}
