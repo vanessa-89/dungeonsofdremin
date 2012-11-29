@@ -38,7 +38,7 @@ void drawDividers(SDL_Surface* sur)
     {
         pix::put_pixel16(sur, 639, y, 255, 255, 255);
     }
-	
+        
     // Mid line x
     for(int x = 0; x < 640; x++)
     {
@@ -77,52 +77,62 @@ int main()
 
     bff_font::font basicfont;
     basicfont.load("media/Midevil.bff");
-	
-	// Temporary tile defintion for testing
-	tiles::tile tmptile;
-	tmptile.clear();
-	
-	tmptile.frames[0][0][0] = 12435;
-	tmptile.frames[0][0][16] = 12435;
-	tmptile.frames[0][16][0] = 12435;
-	tmptile.frames[0][16][16] = 12435;
-	
-	tmptile.frames[0][8][8] = 455675;
-	
-	// Create map
-	tiles::tilemap map;
-	
-	// Fill map with tmp tiles
-	for(int sx = 0; sx < 28; sx++)
-	{
-		for(int sy = 0; sy < 21; sy++)
+        
+        // Temporary tile defintion for testing
+        tiles::tile tmptile;
+        tmptile.clear();
+        
+		
+		for(int x = 0; x < 16; x++)
 		{
-			map.tiledat[sx][sy] = &tmptile;
+			for(int y = 0; y < 16; y++)
+			{
+				tmptile.frames[0][x][y] = x;
+			}
 		}
-	}
-	
-	// Items test
-	vector<items::itembase> itemTable;
-	
-	// How to construct a custom object and add it to the item table
-	items::projectile* it = new items::projectile;
-	it->name = "ROFLCANNON";
-	it->desc = "Nyan cat's weapon of choice";
-	it->value = 10000000000000000;
-	it->damage = 9001;
-	it->range = 5000;
-	it->delay = 0.1;
-	it->r = 255;
-	it->g = 0;
-	it->b = 0;
-	itemTable.push_back(*it);
-	delete it;
-	
-	cout << itemTable[0].desc << endl;
-	
-	
-	
-	
+		
+		
+        tmptile.frames[0][0][0] = 12435;
+        tmptile.frames[0][0][16] = 12435;
+        tmptile.frames[0][16][0] = 12435;
+        tmptile.frames[0][16][16] = 12435;
+        
+        tmptile.frames[0][8][8] = 455675;
+        
+        // Create map
+        tiles::tilemap map;
+        
+        // Fill map with tmp tiles
+        for(int sx = 0; sx < 28; sx++)
+        {
+                for(int sy = 0; sy < 21; sy++)
+                {
+                        map.tiledat[sx][sy] = &tmptile;
+                }
+        }
+        
+        // Items test
+        vector<items::itembase> itemTable;
+        
+        // How to construct a custom object and add it to the item table
+        items::projectile* it = new items::projectile;
+        it->name = "ROFLCANNON";
+        it->desc = "Nyan cat's weapon of choice";
+        it->value = 10000000000000000;
+        it->damage = 9001;
+        it->range = 5000;
+        it->delay = 0.1;
+        it->r = 255;
+        it->g = 0;
+        it->b = 0;
+        itemTable.push_back(*it);
+        delete it;
+        
+        cout << itemTable[0].desc << endl;
+        
+        
+        
+        
     cout << endl;
     cout << "Entering main loop..." << endl;
     bool running = true;
@@ -136,17 +146,17 @@ int main()
             if( event.type == SDL_QUIT ) // if x pressed, exit
             {
                 cout << "Exit initiated." << endl;
-				running = false;
+                                running = false;
             }
             if(keystates[SDLK_ESCAPE]) // if esc pressed, exit
             {
                 cout << "Exit initiated." << endl;
-				running = false;
+                                running = false;
             }
         }
-		
-		// Lock the screen surface and clear it, then do drawing 
-		SDL_LockSurface(gwin.screen);
+                
+                // Lock the screen surface and clear it, then do drawing 
+                SDL_LockSurface(gwin.screen);
         gwin.clear();
 
         //mainchar.draw(gwin.screen, 0, 0);
@@ -155,13 +165,13 @@ int main()
 
         drawDividers(gwin.screen);
         basicfont.drawstr(gwin.screen, 450, 160, 255, 100, 100, "HP");
-		
-		// Draw the tilemap
-		map.draw(gwin.screen, 1, 1);
-		//tmptile.draw(gwin.screen, 0, 0);
-		
-		
-		// Unlock screen surface so we can update the screen
+                
+                // Draw the tilemap
+                map.draw(gwin.screen, 1, 1);
+                //tmptile.draw(gwin.screen, 0, 0);
+                
+                
+                // Unlock screen surface so we can update the screen
         SDL_UnlockSurface(gwin.screen);
 
         // update screen
@@ -173,7 +183,7 @@ int main()
     }
 
     SDL_Quit();
-	cout << "Clean up complete, ending." << endl;
-	exit(0);
+        cout << "Clean up complete, ending." << endl;
+        exit(0);
 
 }

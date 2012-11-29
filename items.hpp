@@ -1,3 +1,4 @@
+
 #ifndef ITEMS_HPP_INCLUDED
 #define ITEMS_HPP_INCLUDED
 
@@ -6,33 +7,44 @@
 
 namespace items
 {
-	class itembase
-	{
-		public:
-		string name;
-		string desc;
-		int value;
-		itembase()
-		{
-	
-		}
-	};
-	
-	class weapon : public itembase
-	{
-		public:
-		int damage; // Damage
-		int range; // Range of attack
-		float delay; // time before another attack
-	};
-	
-	
-	class projectile : public weapon
-	{
-		public:
-		int r, g, b; // Color for projectile
-	};
-	
+        class itembase
+        {
+                public:
+                string name;
+                string desc;
+                int value;
+                itembase()
+                {
+        
+                }
+				virtual void use()
+				{
+				
+				}
+        };
+        
+        class weapon : public itembase
+        {
+                public:
+                int damage; // Damage
+                int range; // Range of attack
+                float delay; // time before another attack
+        };
+        
+        
+        class projectile : public weapon
+        {
+                public:
+                int r, g, b; // Color for projectile
+				
+				virtual void use()
+				{
+				
+					// Shoot projectile
+				}
+
+        };
+        
 }
 
 
