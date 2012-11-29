@@ -6,96 +6,79 @@
 
 #include <string>
 #include <fstream>
+#include "graphics.hpp"
 
 using namespace std;
 
 
-namespace bff_font
+namespace ttf_font
 {
-    class font
+    class fontwrapper
     {
         public:
-        bool data[255][16][16];
-        font()
+		TTF_Font *fontd;
+		string name;
+        fontwrapper()
         {
-
+			TTF_Init();
+			fontd = NULL;
         }
+		~fontwrapper()
+		{
+			TTF_CloseFont(fontd);
+		}
 
-        int load(std::string fname)
+        int load(std::string fname, int size)
         {
-            // BFF Bool Font Format
-            cout << "Loading BFF Font " << fname << endl;
-            char buffer[17];
-            ifstream file;
-            file.open(fname.c_str());
-            if(file == NULL)
-            {
-                file.close();
-                cout << "Error: Could Not Find Font File " << fname << endl;
-                exit(1);
-            }
+            name = fname;
+			fontd = TTF_OpenFont(fname.c_str(), size);
+			if( fontd == NULL )
+			{
+				return 1;
+			}
 
-            int letter = 0;
-            while(!file.eof())
-            {
-
-                for(int y = 0; y < 16; y++)
-                {
-                    file.getline(buffer, 17);
-                    //cout << buffer << endl;
-
-                    for(int x = 0; x < 16; x++)
-                    {
-                        data[letter][y][x] = buffer[x] - '0'; // convert to int, then bool
-                    }
-
-                }
-
-                letter++;
-
-            }
-
-            file.close();
             return 0;
         }
+		
+		void resize(int size)
+		{
+			load(name, size);
+		}
 
-        void draw(SDL_Surface* &sur, int xp, int yp, char r, char g, char b, char c)
+		int drawstr(SDL_Surface* &sur, int xd, int yd, int r, int g, int b, string str)
         {
-            for(int x = 0; x < 16; x++)
-            {
-                for(int y = 0; y < 16; y++)
-                {
-                    //cout << data[1][x][y];
-                    if(data[(int)c-60][x][y] == 1)
-                    {
-                        pix::put_pixel16(sur, y+xp, x+yp, r, g, b);
-                    }
-                }
-                //cout << endl;
-            }
+			//cout << "drawing font..." << endl;
+			Uint8 pv;
+			Uint8 tr, tg, tb;
+			
+			SDL_Surface* message = NULL;
+			SDL_Color Fcolor = { r, g, b };
+			SDL_Color Bcolor = { 0, 0, 0 };
+			if(Fcolor.r == 0 && Fcolor.g == 0 && Fcolor.b == 0) Bcolor.r = 255;
+	
+			
+			message = TTF_RenderText_Shaded(fontd, str.c_str(), Fcolor, Bcolor);
+			if(message == NULL)
+			{
+				return 1;
+			}
+			
+			//SDL_ConvertSurface(message, sur->format, NULL);
 
-        }
-
-        void drawstr(SDL_Surface* &sur, int xd, int yd, int r, int g, int b, string str)
-        {
-            int xr = 0;
-            for(int letter = 0; letter < str.size(); letter++)
-            {
-                xr++;
-                //cout << (letter*16) << endl;
-                if(str[letter] == '\n')
-                {
-                    yd += 16;
-                    xr = 0;
-                }
-                if(str[letter] == ' ')
-                {
-                    xr++;
-                    continue;
-                }
-                draw(sur, xd+xr*16, yd, r, g, b, str[letter]);
-            }
-        }
+			for(int x = 0; x < message->h/2; x++)
+			{
+				for(int y = 0; y < message->w/2; y++)
+				{
+					pv = pix::get_pixel16(message, y, x);
+					SDL_GetRGB(pv, message->format, &tr,&tg,&tb);
+					
+					if(tr == Bcolor.r && tg == Bcolor.g && tb == Bcolor.b) continue;
+					pix::put_pixel16(sur, y+xd, x+yd, tr, tg, tb);
+				}
+			}
+			
+		}
+            
 
 
     };
