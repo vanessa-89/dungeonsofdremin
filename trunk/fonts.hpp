@@ -36,6 +36,9 @@ namespace ttf_font
 			{
 				return 1;
 			}
+			TTF_SetFontKerning(fontd, 0);
+			TTF_SetFontHinting(fontd, TTF_HINTING_NONE);
+			//TTF_SetFontStyle(fontd, TTF_STYLE_ITALIC);
 
             return 0;
         }
@@ -65,7 +68,8 @@ namespace ttf_font
 			}
 			
 			//SDL_ConvertSurface(message, sur->format, NULL);
-
+			
+			
 			for(int x = 0; x < message->h/2; x++)
 			{
 				for(int y = 0; y < message->w/2; y++)
