@@ -139,12 +139,24 @@ int main()
     cout << endl;
     cout << "Entering main loop..." << endl;
     bool running = true;
+	
     int x = 0;
 	int y = 0;
+	
+	// Debug data
+	Uint32 startTime; 
 	Uint8 r, g, b;
+	int frames = 0;
+	char buffer[10];
+	bool debugmode = false;
+	string debugmessage;
+	int fps = 0;
+	float frametime = 0;
+	
+	startTime = SDL_GetTicks();
     while(running)
     {
-        // poll and handle events
+		// poll and handle events
         while( SDL_PollEvent( &event ) )
         {
             keystates = SDL_GetKeyState( NULL ); // Update keystates
@@ -158,15 +170,26 @@ int main()
                 cout << "Exit initiated." << endl;
                 running = false;
             }
+			if(keystates[SDLK_F1]) // if esc pressed, exit
+            {
+                if(debugmode == true)
+				{
+					debugmode = false;
+				}
+				else
+				{
+					debugmode = true;
+				}
+            }
         }
                 
         // Lock the screen surface and clear it, then do drawing 
-        SDL_LockSurface(gwin.screen);
+        //SDL_LockSurface(gwin.screen);
         
 		SDL_GetMouseState(&x, &y);
 		//cout << x << ", " << y << endl; 
 		
-		//SDL_GetRGB(pix::get_pixel16(gwin.screen, x, y), gwin.screen->format, &r, &g, &b);
+		SDL_GetRGB(pix::get_pixel16(gwin.screen, x, y), gwin.screen->format, &r, &g, &b);
 		//cout << (int)r << ", " << (int)g << ", " << (int)b << endl;
 		gwin.clear();
 
@@ -182,15 +205,45 @@ int main()
         //tmptile.draw(gwin.screen, 0, 0);
         
 		basicfont.drawstr(gwin.screen, 450, 160, 255, 100, 100, "HP: 100");
+		
+		if(debugmode == true)
+		{
+			// Mouse Pos
+			debugmessage.clear();
+			debugmessage = "MPOS: ";
+			itoa(x, buffer, 10);
+			debugmessage += buffer; 
+			debugmessage += ", ";
+			itoa(y, buffer, 10);
+			debugmessage += buffer; 
+			basicfont.drawstr(gwin.screen, 0, 0, 255, 0, 255, debugmessage);
+			
+			// FPS
+			debugmessage.clear();
+			debugmessage = "FPS: ";
+			
+			itoa(fps, buffer, 10);
+			debugmessage += buffer;
+			basicfont.drawstr(gwin.screen, 0, 10, 255, 0, 255, debugmessage);
+		}
+		//itoa(xs, buffer, 10);
+		//basicfont.drawstr(gwin.screen, 0, 0, 255, 0, 255, buffer);
                 
         // Unlock screen surface so we can update the screen
-        SDL_UnlockSurface(gwin.screen);
+        //SDL_UnlockSurface(gwin.screen);
 
         // update screen
         gwin.update();
 
         //cout << SDL_GetError();
-        x+=0.1;
+		++frames;
+		if(debugmode == true)
+		{
+			frametime = ((SDL_GetTicks() - startTime));
+			cout << fps << endl;
+			fps = ((float)1000/(float)frametime);
+			startTime = SDL_GetTicks();
+		}
 
     }
 
