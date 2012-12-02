@@ -51,15 +51,11 @@ namespace ttf_font
 		int drawstr(SDL_Surface* &sur, int xd, int yd, int r, int g, int b, string str)
         {
 			//cout << "drawing font..." << endl;
-			Uint8 pv;
-			Uint8 tr, tg, tb;
+
+			SDL_Color Fcolor = {r, g, b}; 
+			SDL_Color Bcolor = {0, 0, 0}; 
 			
 			SDL_Surface* message = NULL;
-			SDL_Color Fcolor = { r, g, b };
-			SDL_Color Bcolor = { 0, 0, 0 };
-			// If the text color is black, change the alpha
-			if(Fcolor.r == 0 && Fcolor.g == 0 && Fcolor.b == 0) Bcolor.b = 1;
-	
 			
 			message = TTF_RenderText_Shaded(fontd, str.c_str(), Fcolor, Bcolor);
 			if(message == NULL)
@@ -67,21 +63,15 @@ namespace ttf_font
 				return 1;
 			}
 			
-			//SDL_ConvertSurface(message, sur->format, NULL);
+			SDL_ConvertSurface(message, sur->format, NULL);
+			SDL_SetColorKey(message, SDL_SRCCOLORKEY, SDL_MapRGB(message->format, 0, 0, 0));
 			
+			SDL_Rect offset;
+			offset.x = xd;
+			offset.y = yd;
 			
-			for(int x = 0; x < message->h/2; x++)
-			{
-				for(int y = 0; y < message->w/2; y++)
-				{
-					pv = pix::get_pixel16(message, y, x);
-					SDL_GetRGB(pv, message->format, &tr,&tg,&tb);
-					
-					// Check if its the alpha color
-					if(tr == Bcolor.r && tg == Bcolor.g && tb == Bcolor.b) continue;
-					pix::put_pixel16(sur, y+xd, x+yd, tr, tg, tb);
-				}
-			}
+			SDL_BlitSurface(message, NULL, sur, &offset );
+			
 			
 		}
             

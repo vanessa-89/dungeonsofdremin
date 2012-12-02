@@ -55,11 +55,11 @@ namespace pix
 
                 if(fullsreen)
                 {
-                    screen = SDL_SetVideoMode( xres, yres, depth, SDL_SWSURFACE);
+                    screen = SDL_SetVideoMode( xres, yres, depth, SDL_HWSURFACE);
                 }
                 else
                 {
-                    screen = SDL_SetVideoMode( xres, yres, depth, SDL_SWSURFACE | SDL_FULLSCREEN);
+                    screen = SDL_SetVideoMode( xres, yres, depth, SDL_HWSURFACE | SDL_FULLSCREEN);
                 }
 
                 if(!screen) return 1;
