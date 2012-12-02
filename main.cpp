@@ -8,6 +8,7 @@
 #include "sprite.h"
 #include "tilemanager.hpp"
 #include "items.hpp"
+#include "actors.hpp"
 
 #undef main
 
@@ -117,7 +118,7 @@ int main()
         }
     }
         
-    // Items test
+    // Items
     vector<items::itembase> itemTable;
         
     // How to construct a custom object and add it to the item table
@@ -130,7 +131,7 @@ int main()
     it->delay = 0.1;
     it->r = 255;
     it->g = 0;
-    it->b = 0;
+    it->b = 255;
     itemTable.push_back(*it);
     delete it;
         
