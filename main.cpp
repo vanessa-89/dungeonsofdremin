@@ -78,7 +78,7 @@ int main()
 	
 	TTF_Init(); // start font system
     ttf_font::fontwrapper basicfont;
-	if(basicfont.load("media/alphbeta.ttf", 30) != 0)
+	if(basicfont.load("media/alphbeta.ttf", 12) != 0)
 	{
 		cout << "[ERROR] Could Not Find Font File!" << endl;
 		exit(1);
@@ -208,6 +208,7 @@ int main()
 		
 		if(debugmode == true)
 		{
+			basicfont.drawstr(gwin.screen, 0, 0, 255, 0, 255, "DEBUG MODE");
 			// Mouse Pos
 			debugmessage.clear();
 			debugmessage = "MPOS: ";
@@ -216,7 +217,7 @@ int main()
 			debugmessage += ", ";
 			itoa(y, buffer, 10);
 			debugmessage += buffer; 
-			basicfont.drawstr(gwin.screen, 0, 0, 255, 0, 255, debugmessage);
+			basicfont.drawstr(gwin.screen, 0, 10, 255, 0, 255, debugmessage);
 			
 			// FPS
 			debugmessage.clear();
@@ -224,7 +225,7 @@ int main()
 			
 			itoa(fps, buffer, 10);
 			debugmessage += buffer;
-			basicfont.drawstr(gwin.screen, 0, 10, 255, 0, 255, debugmessage);
+			basicfont.drawstr(gwin.screen, 0, 20, 255, 0, 255, debugmessage);
 		}
 		//itoa(xs, buffer, 10);
 		//basicfont.drawstr(gwin.screen, 0, 0, 255, 0, 255, buffer);
@@ -240,7 +241,6 @@ int main()
 		if(debugmode == true)
 		{
 			frametime = ((SDL_GetTicks() - startTime));
-			cout << fps << endl;
 			fps = ((float)1000/(float)frametime);
 			startTime = SDL_GetTicks();
 		}
