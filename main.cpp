@@ -187,16 +187,8 @@ int main()
         //SDL_LockSurface(gwin.screen);
         
 		SDL_GetMouseState(&x, &y);
-		//cout << x << ", " << y << endl; 
-		
-		SDL_GetRGB(pix::get_pixel16(gwin.screen, x, y), gwin.screen->format, &r, &g, &b);
-		//cout << (int)r << ", " << (int)g << ", " << (int)b << endl;
-		gwin.clear();
 
-		
-        //mainchar.draw(gwin.screen, 0, 0);
-        //basicfont.drawstr(gwin.screen, 0, 0, 255, 100, 100, "= THE DUNGEONS OF DREMIN =");
-        //basicfont.draw(gwin.screen, x, 1, 255, 255, 255, 'D');
+		gwin.clear();
 
         drawDividers(gwin.screen);
                 
@@ -204,11 +196,12 @@ int main()
         map.draw(gwin.screen, 1, 1);
         //tmptile.draw(gwin.screen, 0, 0);
         
-		basicfont.drawstr(gwin.screen, 450, 160, 255, 100, 100, "HP: 100");
+		basicfont.drawstr(gwin.screen, 452, 160, 255, 100, 100, "HP: 100");
+		basicfont.drawstr(gwin.screen, 452, 170, 255, 100, 100, "ARM: 100");
 		
 		if(debugmode == true)
 		{
-			basicfont.drawstr(gwin.screen, 0, 0, 255, 0, 255, "DEBUG MODE");
+			basicfont.drawstr(gwin.screen, 2, 0, 255, 0, 255, "DEBUG MONITOR");
 			// Mouse Pos
 			debugmessage.clear();
 			debugmessage = "MPOS: ";
@@ -217,7 +210,7 @@ int main()
 			debugmessage += ", ";
 			itoa(y, buffer, 10);
 			debugmessage += buffer; 
-			basicfont.drawstr(gwin.screen, 0, 10, 255, 0, 255, debugmessage);
+			basicfont.drawstr(gwin.screen, 2, 20, 255, 0, 255, debugmessage);
 			
 			// FPS
 			debugmessage.clear();
@@ -225,10 +218,8 @@ int main()
 			
 			itoa(fps, buffer, 10);
 			debugmessage += buffer;
-			basicfont.drawstr(gwin.screen, 0, 20, 255, 0, 255, debugmessage);
+			basicfont.drawstr(gwin.screen, 2, 30, 255, 0, 255, debugmessage);
 		}
-		//itoa(xs, buffer, 10);
-		//basicfont.drawstr(gwin.screen, 0, 0, 255, 0, 255, buffer);
                 
         // Unlock screen surface so we can update the screen
         //SDL_UnlockSurface(gwin.screen);
@@ -236,7 +227,6 @@ int main()
         // update screen
         gwin.update();
 
-        //cout << SDL_GetError();
 		++frames;
 		if(debugmode == true)
 		{
