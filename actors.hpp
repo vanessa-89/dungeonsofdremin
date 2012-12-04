@@ -1,7 +1,8 @@
-#ifndef ITEMS_HPP_INCLUDED
-#define ITEMS_HPP_INCLUDED
+#ifndef ACTORS_HPP_INCLUDED
+#define ACTORS_HPP_INCLUDED
 
 #include <vector>
+#include "items.hpp"
 
 using namespace std;
 
@@ -31,18 +32,10 @@ namespace actors
 		
 		void equip(int iitem, int eitem)
 		{
-			equipped[eitem] = inventory[iitem];
-			eqamount[eitem] = invamount[iitem];
-			inventory.erase(item);
-			invamount.erase(item);
-		}
-		
-		void unequip(int eitem, int iitem)
-		{
-			equipped[eitem]
-			invamount.insert(eqamount[eitem])
-			inventory.erase(item);
-			invamount.erase(item);
+			//equipped[eitem] = inventory[iitem];
+			//eqamount[eitem] = invamount[iitem];
+			//inventory.erase(iitem);
+			//invamount.erase(iitem);
 		}
 		
 		

@@ -9,6 +9,7 @@
 #include "tilemanager.hpp"
 #include "items.hpp"
 #include "actors.hpp"
+#include "LegendaryDefinitions.hpp"
 
 #undef main
 
@@ -146,7 +147,6 @@ int main()
 	
 	// Debug data
 	Uint32 startTime; 
-	Uint8 r, g, b;
 	int frames = 0;
 	char buffer[10];
 	bool debugmode = false;
@@ -154,6 +154,13 @@ int main()
 	int fps = 0;
 	float frametime = 0;
 	
+	// Dev data
+	bool devmode = false;
+	
+	
+	
+	
+	// Start frame timer
 	startTime = SDL_GetTicks();
     while(running)
     {
@@ -171,7 +178,7 @@ int main()
                 cout << "Exit initiated." << endl;
                 running = false;
             }
-			if(keystates[SDLK_F1]) // if esc pressed, exit
+			if(keystates[SDLK_F1])
             {
                 if(debugmode == true)
 				{
@@ -180,6 +187,17 @@ int main()
 				else
 				{
 					debugmode = true;
+				}
+            }
+			if(keystates[SDLK_F2])
+            {
+                if(devmode == true)
+				{
+					devmode = false;
+				}
+				else
+				{
+					devmode = true;
 				}
             }
         }
@@ -210,7 +228,7 @@ int main()
 			debugmessage += buffer; 
 			debugmessage += ", ";
 			itoa(y, buffer, 10);
-			debugmessage += buffer; 
+			debugmessage += buffer;
 			basicfont.drawstr(gwin.screen, 2, 20, 255, 0, 255, debugmessage);
 			
 			// FPS
@@ -221,7 +239,21 @@ int main()
 			debugmessage += buffer;
 			basicfont.drawstr(gwin.screen, 2, 30, 255, 0, 255, debugmessage);
 		}
-                
+		
+		if(devmode == true)
+		{
+			basicfont.drawstr(gwin.screen, 2, 0, 255, 0, 255, "DEV CONSOLE");
+			basicfont.drawstr(gwin.screen, 2, 10, 255, 0, 255, ">");
+			
+			while(keystates[SDLK_RETURN] != true)
+			{
+				keystates = SDL_GetKeyState( NULL ); // Update keystates
+				//for(int k = 0; k < )
+			
+			}
+
+		}
+        
         // Unlock screen surface so we can update the screen
         //SDL_UnlockSurface(gwin.screen);
 
