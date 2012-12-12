@@ -6,12 +6,11 @@
 namespace legends
 {
 	
-	items::projectile* ROFLCANNON;
-	
-	class weps
+	class legendary
 	{
 		public:
-		
+		items::projectile* ROFLCANNON; // LUKE CONNOR
+      
 		weps()
 		{
 			ROFLCANNON = new items::projectile;
