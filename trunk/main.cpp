@@ -201,6 +201,10 @@ int main()
 				}
 				if(keystates[SDLK_F1])
 				{
+					if(devmode == true)
+					{
+						devmode = false;
+					}
 					if(debugmode == true)
 					{
 						debugmode = false;
@@ -212,6 +216,11 @@ int main()
 				}
 				if(keystates[SDLK_F2])
 				{
+					/*
+					if(debugmode == true)
+					{
+						debugmode = false;
+					}
 					if(devmode == true)
 					{
 						devmode = false;
@@ -220,6 +229,7 @@ int main()
 					{
 						devmode = true;
 					}
+					*/
 				}
 				
 			}
@@ -239,8 +249,10 @@ int main()
         map.draw(gwin.screen, 1, 1);
         //tmptile.draw(gwin.screen, 0, 0);
         
-		basicfont.drawstr(gwin.screen, 452, 160, 255, 100, 100, "HP: 100");
-		basicfont.drawstr(gwin.screen, 452, 170, 255, 100, 100, "ARM: 100");
+		basicfont.drawstr(gwin.screen, 452, 160, 255, 100, 100, "HEALTH: 100");
+		basicfont.drawstr(gwin.screen, 452, 170, 255, 100, 100, "ARMOR: 100");
+		basicfont.drawstr(gwin.screen, 452, 180, 255, 100, 100, "COINS: 25");
+		
 		
 		inventoryButton.graphicsUpdate(gwin.screen);
 		
