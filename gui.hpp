@@ -83,16 +83,36 @@ namespace sgui
 		
 		void graphicsUpdate(SDL_Surface* sur)
 		{
-			// Draw box
-			for(int x = x1; x < x2; x++)
-			{
-				for(int y = y1; y < y2; y++)
+				int mx;
+				int my;
+				SDL_GetMouseState(&mx, &my);
+				
+				if(x2 > mx && mx > x1 && y2 > my && my > y1)
 				{
-					pix::put_pixel16(sur, x, y, br, bg, bb);
+					// Draw box
+					for(int x = x1; x < x2; x++)
+					{
+						for(int y = y1; y < y2; y++)
+						{
+							pix::put_pixel16(sur, x, y, tr, tg, tb);
+						}
+					}
+					// Draw text
+					fnt->drawstr(sur, ((x2+x1)/2-text.size()*2), ((y2+y1)/2)-textsize/2, br, bg, bb, text);
+					
+					return;
 				}
-			}
-			// Draw text
-			fnt->drawstr(sur, ((x2+x1)/2-text.size()*2), ((y2+y1)/2)-textsize/2, tr, tg, tb, text);
+
+				// Draw box
+				for(int x = x1; x < x2; x++)
+				{
+					for(int y = y1; y < y2; y++)
+					{
+						pix::put_pixel16(sur, x, y, br, bg, bb);
+					}
+				}
+				// Draw text
+				fnt->drawstr(sur, ((x2+x1)/2-text.size()*2), ((y2+y1)/2)-textsize/2, tr, tg, tb, text);
 			
 		}
 		
