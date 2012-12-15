@@ -240,6 +240,7 @@ int main()
         //SDL_LockSurface(gwin.screen);
         
 		SDL_GetMouseState(&x, &y);
+		
 
 		gwin.clear();
 
@@ -249,9 +250,13 @@ int main()
         map.draw(gwin.screen, 1, 1);
         //tmptile.draw(gwin.screen, 0, 0);
         
-		basicfont.drawstr(gwin.screen, 452, 160, 255, 100, 100, "HEALTH: 100");
-		basicfont.drawstr(gwin.screen, 452, 170, 255, 100, 100, "ARMOR: 100");
-		basicfont.drawstr(gwin.screen, 452, 180, 255, 100, 100, "COINS: 25");
+		basicfont.resize(10);
+		basicfont.drawstr(gwin.screen, 515, 3, 135, 85, 45, "~ DEPTH: 1 ~");
+		
+		basicfont.resize(12);
+		basicfont.drawstr(gwin.screen, 452, 160, 219, 50, 50, "HEALTH: 100");
+		basicfont.drawstr(gwin.screen, 452, 170, 153, 153, 153, "ARMOR: 100");
+		basicfont.drawstr(gwin.screen, 452, 180, 224, 202, 31, "COINS: 25");
 		
 		
 		inventoryButton.graphicsUpdate(gwin.screen);
@@ -296,6 +301,7 @@ int main()
         //SDL_UnlockSurface(gwin.screen);
 		
         // update screen
+		
         gwin.update();
 
 		++frames;

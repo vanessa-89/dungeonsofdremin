@@ -47,7 +47,7 @@ namespace ttf_font
 			load(name, size);
 		}
 
-		int drawstr(SDL_Surface* &sur, int xd, int yd, int r, int g, int b, string str)
+		int drawstr(SDL_Surface* &sur, int xd, int yd, char r, char g, char b, string str)
         {
 			//cout << "drawing font..." << endl;
 
