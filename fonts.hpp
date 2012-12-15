@@ -2,7 +2,6 @@
 #define BFF_HPP_INCLUDED
 
 // Fonts.hpp - Luke Connor 11/8/12
-// Graphics functions for sdl games with pixel manipulation.
 
 #include <string>
 #include <fstream>
@@ -36,8 +35,8 @@ namespace ttf_font
 			{
 				return 1;
 			}
-			TTF_SetFontKerning(fontd, 0);
-			TTF_SetFontHinting(fontd, TTF_HINTING_NONE);
+			//TTF_SetFontKerning(fontd, 0);
+			//TTF_SetFontHinting(fontd, TTF_HINTING_NONE);
 			//TTF_SetFontStyle(fontd, TTF_STYLE_ITALIC);
 
             return 0;

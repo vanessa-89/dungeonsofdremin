@@ -1,4 +1,4 @@
-#ifndef LEGEBD_HPP_INCLUDED
+#ifndef LEGEND_HPP_INCLUDED
 #define LEGEND_HPP_INCLUDED
 
 #include "items.hpp"
@@ -11,7 +11,7 @@ namespace legends
 		public:
 		items::projectile* ROFLCANNON; // LUKE CONNOR
       
-		weps()
+		legendary()
 		{
 			ROFLCANNON = new items::projectile;
 			ROFLCANNON->name = "ROFLCANNON";
@@ -28,7 +28,7 @@ namespace legends
 		}
 		
 		
-		~weps()
+		~legendary()
 		{
 			delete ROFLCANNON;
 		

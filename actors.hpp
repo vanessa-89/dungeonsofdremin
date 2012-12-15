@@ -16,7 +16,7 @@ namespace actors
 		vector<unsigned int> invamount; // of given inv item
 		
 		items::itembase equipped[9];
-		unsigned int eqamount[9];
+		unsigned int equippedamount[9];
 		
 		actor()
 		{

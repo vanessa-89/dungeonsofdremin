@@ -5,10 +5,11 @@
 
 #include "graphics.hpp"
 #include "fonts.hpp"
-#include "sprite.h"
+//#include "sprite.hpp"
 #include "tilemanager.hpp"
 #include "items.hpp"
 #include "actors.hpp"
+#include "gui.hpp"
 #include "LegendaryDefinitions.hpp"
 
 #undef main
@@ -44,13 +45,13 @@ void drawDividers(SDL_Surface* sur)
     // Mid line x
     for(int x = 0; x < 640; x++)
     {
-        pix::put_pixel16(sur, x, 337, 255, 255, 0);
+        pix::put_pixel16(sur, x, 337, 255, 255, 255);
     }
 
     // Mid line y
     for(int y = 0; y < 480; y++)
     {
-        pix::put_pixel16(sur, 449, y, 255, 0, 255);
+        pix::put_pixel16(sur, 449, y, 255, 255, 255);
     }
 
     // Right half divider
@@ -60,6 +61,12 @@ void drawDividers(SDL_Surface* sur)
     }
 
 }
+
+void testfunc()
+{
+	cout << "test" << endl;
+}
+
 
 int main()
 {
@@ -76,7 +83,6 @@ int main()
 
     SDL_Event event;
     Uint8 *keystates;
-	
 	
 	TTF_Init(); // start font system
     ttf_font::fontwrapper basicfont;
@@ -158,6 +164,7 @@ int main()
 	bool devmode = false;
 	
 	
+	sgui::button inventoryButton(450,460,639,479, 0, 0, 255, "INVENTORY", 12, 255, 0, 0, &testfunc, &basicfont);
 	
 	
 	// Start frame timer
@@ -167,39 +174,56 @@ int main()
 		// poll and handle events
         while( SDL_PollEvent( &event ) )
         {
-            keystates = SDL_GetKeyState( NULL ); // Update keystates
             if( event.type == SDL_QUIT ) // if x pressed, exit
             {
                 cout << "Exit initiated." << endl;
                 running = false;
             }
-            if(keystates[SDLK_ESCAPE]) // if esc pressed, exit
-            {
-                cout << "Exit initiated." << endl;
-                running = false;
-            }
-			if(keystates[SDLK_F1])
-            {
-                if(debugmode == true)
+			if(event.type == SDL_MOUSEBUTTONDOWN)
+			{
+				if(event.button.button == SDL_BUTTON_LEFT)
 				{
-					debugmode = false;
+					// Update gui butttons
+					inventoryButton.logicUpdate();
 				}
-				else
+			
+			}
+			
+			
+			if( event.type == SDL_KEYDOWN )
+			{
+				keystates = SDL_GetKeyState( NULL ); // Update keystates
+				
+				if(keystates[SDLK_ESCAPE]) // if esc pressed, exit
 				{
-					debugmode = true;
+					cout << "Exit initiated." << endl;
+					running = false;
 				}
-            }
-			if(keystates[SDLK_F2])
-            {
-                if(devmode == true)
+				if(keystates[SDLK_F1])
 				{
-					devmode = false;
+					if(debugmode == true)
+					{
+						debugmode = false;
+					}
+					else
+					{
+						debugmode = true;
+					}
 				}
-				else
+				if(keystates[SDLK_F2])
 				{
-					devmode = true;
+					if(devmode == true)
+					{
+						devmode = false;
+					}
+					else
+					{
+						devmode = true;
+					}
 				}
-            }
+				
+			}
+            
         }
                 
         // Lock the screen surface and clear it, then do drawing 
@@ -217,6 +241,8 @@ int main()
         
 		basicfont.drawstr(gwin.screen, 452, 160, 255, 100, 100, "HP: 100");
 		basicfont.drawstr(gwin.screen, 452, 170, 255, 100, 100, "ARM: 100");
+		
+		inventoryButton.graphicsUpdate(gwin.screen);
 		
 		if(debugmode == true)
 		{
@@ -256,7 +282,7 @@ int main()
         
         // Unlock screen surface so we can update the screen
         //SDL_UnlockSurface(gwin.screen);
-
+		
         // update screen
         gwin.update();
 
