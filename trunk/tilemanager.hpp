@@ -13,7 +13,7 @@ namespace tiles
 	class tile
 	{
 		public:
-		Uint16 frames[32][16][16]; // Store frame data
+		SDL_Color dat[16][16]; // Store color data
 		vector<int> contents; // Item ID's stored in this tile
 
         // Lighting flags and values
@@ -21,54 +21,39 @@ namespace tiles
 
 		bool collision; // Collide with this tile?
 
-		char frame; // Current frame
-
-		unsigned int Tid; // Tile ID
-
 		tile()
 		{
-			frame = 0;
+
 		}
 		
 		
 		void clear()
 		{
-			// For each frame(f)
-			for(int f = 0; f < 32; f++)
+			for(int sx = 0; sx < 16; sx++)
 			{
-				for(int sx = 0; sx < 16; sx++)
+				for(int sy = 0; sy < 16; sy++)
 				{
-					for(int sy = 0; sy < 16; sy++)
-					{
-						// Clear each xy combonation
-						frames[f][sx][sy] = 0;
-					}
+					// Clear each xy combonation
+					dat[sx][sy].r = 0;
+					dat[sx][sy].g = 0;
+					dat[sx][sy].b = 0;
+					
 				}
-			
 			}
+	
 		}
 
 		void draw(SDL_Surface* sur, int xpos, int ypos)
 		{
-			// vars
-			// x - x offset
-			// y - y offset
-			// sx - surface x pos
-			// sy - surface y pos
-
-			// Color storage
-			Uint8 r = 0;
-			Uint8 g = 0;
-			Uint8 b = 0;
 
 			for(int sx = 0; sx < 16; sx++)
 			{
 				for(int sy = 0; sy < 16; sy++)
 				{
-					// Get the RGB color from a pixel in the frame data
-					SDL_GetRGB(frames[frame][sx][sy], sur->format, &r, &g, &b);
                     // Output the data with offsets (x and y)
-					pix::put_pixel16(sur, sx+xpos, sy+ypos, r, g, b);
+					//cout << "da" << endl;
+					//cout << dat[sx][sy].r << endl;
+					pix::put_pixel16(sur, sx+xpos, sy+ypos, dat[sx][sy].r, dat[sx][sy].g, dat[sx][sy].b);
 				}
 			}
 		}
@@ -96,7 +81,18 @@ namespace tiles
 				}
 			}
 		}
-
+		
+		void clear()
+		{
+			for(int x = 0; x < 28; x++)
+			{
+				for(int y = 0; y < 21; x++)
+				{
+					tiledat[x][y]->clear();
+				}
+			
+			}
+		}
 
 	};
 
