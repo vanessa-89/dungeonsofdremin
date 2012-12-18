@@ -95,26 +95,33 @@ int main()
     // Temporary tile defintion for testing
 	tiles::tile tmptile;
 	tmptile.clear();
-        
-		
+        	
 	for(int x = 0; x < 16; x++)
 	{
 		for(int y = 0; y < 16; y++)
 		{
-				tmptile.frames[0][x][y] = x;
+				tmptile.dat[x][y].r = 255;
+				tmptile.dat[x][y].g = 0;
+				tmptile.dat[x][y].b = 0;
+		}
+	}
+        
+	tiles::tile tmptile2;
+	tmptile2.clear();
+        	
+	for(int x = 0; x < 16; x++)
+	{
+		for(int y = 0; y < 16; y++)
+		{
+				tmptile2.dat[x][y].r = 0;
+				tmptile2.dat[x][y].g = 255;
+				tmptile2.dat[x][y].b = 0;
 		}
 	}
 		
-		
-    tmptile.frames[0][0][0] = 12435;
-    tmptile.frames[0][0][16] = 12435;
-    tmptile.frames[0][16][0] = 12435;
-    tmptile.frames[0][16][16] = 12435;
-        
-    tmptile.frames[0][8][8] = 455675;
-        
     // Create map
     tiles::tilemap map;
+	//map.clear();
         
     // Fill map with tmp tiles
     for(int sx = 0; sx < 28; sx++)
@@ -124,6 +131,8 @@ int main()
 			map.tiledat[sx][sy] = &tmptile;
         }
     }
+	
+	map.tiledat[0][0] = &tmptile2;
         
     // Items
     vector<items::itembase> itemTable;
@@ -166,6 +175,10 @@ int main()
 	
 	sgui::button inventoryButton(450,460,639,479, 0, 0, 255, "INVENTORY", 12, 255, 0, 0, &testfunc, &basicfont);
 	
+	char r,g,b;
+	r = 220;
+	g = 200;
+	b = 0;
 	
 	// Start frame timer
 	startTime = SDL_GetTicks();
@@ -247,7 +260,7 @@ int main()
         drawDividers(gwin.screen);
                 
         // Draw the tilemap
-        map.draw(gwin.screen, 1, 1);
+        //map.draw(gwin.screen, 1, 1);
         //tmptile.draw(gwin.screen, 0, 0);
         
 		basicfont.resize(10);
@@ -302,7 +315,23 @@ int main()
 		
         // update screen
 		
+		for(int p = 0; p < 50; p++)
+		{
+			for(int l = 0; l < 50; l++)
+			{
+				pix::put_pixel16(gwin.screen, p, l, r, g, b);
+			
+			}
+		
+		}
+		
+		r !=0 ? r-=1 : NULL;
+		g !=0 ? g-=1 : NULL;
+		b !=0 ? b-=1 : NULL;
+		
+		
         gwin.update();
+		SDL_Delay(10);
 
 		++frames;
 		if(debugmode == true)

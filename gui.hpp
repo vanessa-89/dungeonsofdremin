@@ -69,13 +69,9 @@ namespace sgui
 			int my;
 			SDL_GetMouseState(&mx, &my);
 			
-			if(x2 > mx && mx > x1) // X bounds // Check if mouse is in the box
+			if(x2 > mx && mx > x1 && y2 > my && my > y1) // Check if mouse is in the box
 			{
-				if(y2 > my && my > y1) // Y bounds
-				{
-					callback();
-				}
-					
+				callback(); // Call the function pointer
 			}
 					
 		}
