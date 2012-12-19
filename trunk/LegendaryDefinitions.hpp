@@ -16,7 +16,7 @@ namespace legends
 			ROFLCANNON = new items::projectile;
 			ROFLCANNON->name = "ROFLCANNON";
 			ROFLCANNON->desc = "Nyan Cat's weapon of choice";
-			ROFLCANNON->value = 10000000000000000;
+			ROFLCANNON->value = 10000000;
 			ROFLCANNON->damage = 9001;
 			ROFLCANNON->range = 5000;
 			ROFLCANNON->delay = 0.1;

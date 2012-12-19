@@ -62,7 +62,7 @@ namespace ttf_font
 				return 1;
 			}
 			
-			SDL_ConvertSurface(message, sur->format, NULL);
+			SDL_ConvertSurface(message, sur->format, 0);
 			SDL_SetColorKey(message, SDL_SRCCOLORKEY, SDL_MapRGB(message->format, 0, 0, 0));
 			
 			SDL_Rect offset;
@@ -71,7 +71,7 @@ namespace ttf_font
 			
 			SDL_BlitSurface(message, NULL, sur, &offset );
 			
-			
+			return 0;
 		}
             
 
