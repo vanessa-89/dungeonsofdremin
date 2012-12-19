@@ -121,18 +121,18 @@ int main()
 		
     // Create map
     tiles::tilemap map;
-	//map.clear();
+	map.clear();
         
     // Fill map with tmp tiles
     for(int sx = 0; sx < 28; sx++)
     {
         for(int sy = 0; sy < 21; sy++)
         {
-			map.tiledat[sx][sy] = &tmptile;
+			//map.tiledat[sx][sy] = tmptile2;
         }
     }
 	
-	map.tiledat[0][0] = &tmptile2;
+	map.tiledat[10][10] = tmptile2;
         
     // Items
     vector<items::itembase> itemTable;
@@ -141,7 +141,7 @@ int main()
     items::projectile* it = new items::projectile;
     it->name = "ROFLCANNON";
     it->desc = "Nyan cat's weapon of choice";
-    it->value = 10000000000000000;
+    it->value = 10000000;
     it->damage = 9001;
     it->range = 5000;
     it->delay = 0.1;
@@ -179,6 +179,12 @@ int main()
 	r = 220;
 	g = 200;
 	b = 0;
+	
+	// Game Data
+	
+	char msgbuffer[10];
+	unsigned int depth = 100;
+	
 	
 	// Start frame timer
 	startTime = SDL_GetTicks();
@@ -251,7 +257,7 @@ int main()
                 
         // Lock the screen surface and clear it, then do drawing 
         //SDL_LockSurface(gwin.screen);
-        
+        //depth++;
 		SDL_GetMouseState(&x, &y);
 		
 
@@ -260,16 +266,20 @@ int main()
         drawDividers(gwin.screen);
                 
         // Draw the tilemap
-        //map.draw(gwin.screen, 1, 1);
+        map.draw(gwin.screen, 1, 1);
         //tmptile.draw(gwin.screen, 0, 0);
         
 		basicfont.resize(10);
-		basicfont.drawstr(gwin.screen, 515, 3, 135, 85, 45, "~ DEPTH: 1 ~");
+		itoa(depth, msgbuffer, 10);
+		basicfont.drawstr(gwin.screen, 460, 3, 135, 85, 45, (string)"DEPTH: " + (string)msgbuffer);
 		
 		basicfont.resize(12);
-		basicfont.drawstr(gwin.screen, 452, 160, 219, 50, 50, "HEALTH: 100");
-		basicfont.drawstr(gwin.screen, 452, 170, 153, 153, 153, "ARMOR: 100");
-		basicfont.drawstr(gwin.screen, 452, 180, 224, 202, 31, "COINS: 25");
+		itoa(depth, msgbuffer, 10);
+		basicfont.drawstr(gwin.screen, 452, 160, 219, 50, 50, (string)"HEALTH: " + (string)msgbuffer);
+		itoa(depth, msgbuffer, 10);
+		basicfont.drawstr(gwin.screen, 452, 170, 153, 153, 153, (string)"ARMOR: " + (string)msgbuffer);
+		itoa(depth, msgbuffer, 10);
+		basicfont.drawstr(gwin.screen, 452, 180, 224, 202, 31, (string)"COINS: " + (string)msgbuffer);
 		
 		
 		inventoryButton.graphicsUpdate(gwin.screen);
@@ -325,9 +335,9 @@ int main()
 		
 		}
 		
-		r !=0 ? r-=1 : NULL;
-		g !=0 ? g-=1 : NULL;
-		b !=0 ? b-=1 : NULL;
+		r !=0 ? r-=1 : 0;
+		g !=0 ? g-=1 : 0;
+		b !=0 ? b-=1 : 0;
 		
 		
         gwin.update();

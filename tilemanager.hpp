@@ -26,17 +26,32 @@ namespace tiles
 
 		}
 		
-		
-		void clear()
+		tile& operator=(const tile& ti)
 		{
+			
 			for(int sx = 0; sx < 16; sx++)
 			{
 				for(int sy = 0; sy < 16; sy++)
 				{
+
+					dat[sx][sy] = ti.dat[sx][sy];
+				}
+			}
+			
+			return *this;
+		}
+		
+		
+		void clear()
+		{
+			//for(int sx = 0; sx < 16; sx++)
+			{
+				//for(int sy = 0; sy < 16; sy++)
+				{
 					// Clear each xy combonation
-					dat[sx][sy].r = 0;
-					dat[sx][sy].g = 0;
-					dat[sx][sy].b = 0;
+					//dat[sx][sy].r = 0;
+					//dat[sx][sy].g = 0;
+					//dat[sx][sy].b = 0;
 					
 				}
 			}
@@ -63,7 +78,7 @@ namespace tiles
 	class tilemap
 	{
 		public:
-		tile* tiledat[28][21];
+		tile tiledat[28][21];
 
 		tilemap()
 		{
@@ -77,18 +92,18 @@ namespace tiles
 			{
 				for(int sy = 0; sy < 21; sy++)
 				{
-					tiledat[x][y]->draw(sur, (sx*16)+x, (sy*16)+y);
+					tiledat[x][y].draw(sur, (sx*16)+x, (sy*16)+y);
 				}
 			}
 		}
 		
 		void clear()
 		{
-			for(int x = 0; x < 28; x++)
+			//for(int x = 0; x < 28; x++)
 			{
-				for(int y = 0; y < 21; x++)
+				///for(int y = 0; y < 21; x++)
 				{
-					tiledat[x][y]->clear();
+					//tiledat[x][y].clear();
 				}
 			
 			}
