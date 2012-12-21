@@ -78,7 +78,7 @@ int main()
     //SDL_ShowCursor(0); // Hide courser
     cout << "Opening Window..." << endl;
     pix::window gwin;
-    gwin.open(640, 480, 16, false);
+    gwin.open(640, 480, 16, true);
     cout << endl;
 
     SDL_Event event;
@@ -168,6 +168,9 @@ int main()
 	string debugmessage;
 	int fps = 0;
 	float frametime = 0;
+	float delta= 0;
+	int xx = 0;
+	int yy = 0;
 	
 	// Dev data
 	bool devmode = false;
@@ -325,16 +328,18 @@ int main()
 		
         // update screen
 		
-		for(int p = 0; p < 50; p++)
+		//for(int p = 0; p < 50; p++)
 		{
-			for(int l = 0; l < 50; l++)
+			//for(int l = 0; l < 50; l++)
 			{
-				pix::put_pixel16(gwin.screen, p, l, r, g, b);
+				//pix::put_pixel16(gwin.screen, p, l, r, g, b);
 			
 			}
 		
 		}
 		
+		pix::put_pixel16(gwin.screen, (float)xx*delta, (float)yy*delta, 255, 0, 0);
+		cout << delta << endl;
 		r !=0 ? r-=1 : 0;
 		g !=0 ? g-=1 : 0;
 		b !=0 ? b-=1 : 0;
@@ -342,14 +347,22 @@ int main()
 		
         gwin.update();
 		SDL_Delay(10);
+		
+		xx+=10;
+		yy+=10;
 
 		++frames;
 		if(debugmode == true)
 		{
-			frametime = ((SDL_GetTicks() - startTime));
 			fps = ((float)1000/(float)frametime);
-			startTime = SDL_GetTicks();
 		}
+		
+		frametime = (float)((SDL_GetTicks() - startTime));
+		delta = frametime/1000; 
+
+		startTime = SDL_GetTicks();
+		
+		
 
     }
 
