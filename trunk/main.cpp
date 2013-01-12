@@ -21,43 +21,43 @@ void drawDividers(SDL_Surface* sur)
     // Top line
     for(int x = 0; x < 640; x++)
     {
-        pix::put_pixel16(sur, x, 0, 255, 255, 255);
+        pix::put_pixel16(sur, x, 0, 0, 255, 0);
     }
 
     // Bottom line
     for(int x = 0; x < 640; x++)
     {
-        pix::put_pixel16(sur, x, 479, 255, 255, 255);
+        pix::put_pixel16(sur, x, 449, 0, 255, 0);
     }
 
     // Left Side line
     for(int y = 0; y < 480; y++)
     {
-        pix::put_pixel16(sur, 0, y, 255, 255, 255);
+        pix::put_pixel16(sur, 0, y, 0, 255, 0);
     }
 
     // Right Side line
     for(int y = 0; y < 480; y++)
     {
-        pix::put_pixel16(sur, 639, y, 255, 255, 255);
+        pix::put_pixel16(sur, 639, y, 0, 255, 0);
     }
         
     // Mid line x
     for(int x = 0; x < 640; x++)
     {
-        pix::put_pixel16(sur, x, 337, 255, 255, 255);
+        pix::put_pixel16(sur, x, 337, 0, 255, 0);
     }
 
     // Mid line y
     for(int y = 0; y < 480; y++)
     {
-        pix::put_pixel16(sur, 449, y, 255, 255, 255);
+        pix::put_pixel16(sur, 449, y, 0, 255, 0);
     }
 
     // Right half divider
     for(int x = 450; x < 640; x++)
     {
-        pix::put_pixel16(sur, x, 150, 255, 255, 255);
+        pix::put_pixel16(sur, x, 150, 0, 255, 0);
     }
 
 }
@@ -79,8 +79,8 @@ int main()
     cout << "Opening Window..." << endl;
     pix::window gwin;
     gwin.open(640, 480, 16, true);
-    cout << endl;
-
+    cout << endl;	
+	
     SDL_Event event;
     Uint8 *keystates;
 	
@@ -91,48 +91,9 @@ int main()
 		cout << "[ERROR] Could Not Find Font File!" << endl;
 		exit(1);
 	}
-        
-    // Temporary tile defintion for testing
-	tiles::tile tmptile;
-	tmptile.clear();
-        	
-	for(int x = 0; x < 16; x++)
-	{
-		for(int y = 0; y < 16; y++)
-		{
-				tmptile.dat[x][y].r = 255;
-				tmptile.dat[x][y].g = 0;
-				tmptile.dat[x][y].b = 0;
-		}
-	}
-        
-	tiles::tile tmptile2;
-	tmptile2.clear();
-        	
-	for(int x = 0; x < 16; x++)
-	{
-		for(int y = 0; y < 16; y++)
-		{
-				tmptile2.dat[x][y].r = 0;
-				tmptile2.dat[x][y].g = 255;
-				tmptile2.dat[x][y].b = 0;
-		}
-	}
-		
-    // Create map
-    tiles::tilemap map;
-	map.clear();
-        
-    // Fill map with tmp tiles
-    for(int sx = 0; sx < 28; sx++)
-    {
-        for(int sy = 0; sy < 21; sy++)
-        {
-			//map.tiledat[sx][sy] = tmptile2;
-        }
-    }
+    
+	cout << "Loading... " << endl;
 	
-	map.tiledat[10][10] = tmptile2;
         
     // Items
     vector<items::itembase> itemTable;
@@ -150,43 +111,61 @@ int main()
     it->b = 255;
     itemTable.push_back(*it);
     delete it;
-        
-    cout << itemTable[0].desc << endl;
-        
+	
     cout << endl;
     cout << "Entering main loop..." << endl;
     bool running = true;
 	
-    int x = 0;
-	int y = 0;
+	// Testing data
+	int xx = 0;
+	int yy = 0;	
 	
-	// Debug data
+	// System data
 	Uint32 startTime; 
 	int frames = 0;
 	char buffer[10];
 	bool debugmode = false;
 	string debugmessage;
 	int fps = 0;
+	
+	
 	float frametime = 0;
-	float delta= 0;
-	int xx = 0;
-	int yy = 0;
+	float delta = 0;
+	float averageframetime;
+	float frametimes[20];
+	int frametimesindex = 0;
 	
 	// Dev data
 	bool devmode = false;
-	
-	
-	sgui::button inventoryButton(450,460,639,479, 0, 0, 255, "INVENTORY", 12, 255, 0, 0, &testfunc, &basicfont);
-	
-	char r,g,b;
-	r = 220;
-	g = 200;
-	b = 0;
+	sgui::button inventoryButton(450, 450, 639, 479, 0, 0, 255, "INVENTORY", 12, 255, 0, 0, &testfunc, &basicfont);
 	
 	// Game Data
-	
+	int mousex = 0;
+	int mousey = 0;
 	char msgbuffer[10];
 	unsigned int depth = 100;
+	
+	tiles::tilemap map(28,28,1,1);
+	tiles::tiledat * tdat = new tiles::tiledat;
+	
+	for(int fx = 0; fx < 16; fx++)
+	{
+		for(int fy = 0; fy < 16; fy++)
+		{
+			tdat->data[fx][fy].r = 255;
+			tdat->data[fx][fy].g = 255;
+			tdat->data[fx][fy].b = 255;
+			tdat->data[fx][fy].alpha = false;
+		}
+	}
+	tdat->data[0][0].r = 255;
+	tdat->data[0][0].g = 0;
+	tdat->data[0][0].b = 0;
+	
+	map.writeTile(tdat, 20, 10);
+	map.writeTile(tdat, 10, 10);
+	map.writeTile(tdat, 15, 14);
+	
 	
 	
 	// Start frame timer
@@ -210,7 +189,6 @@ int main()
 				}
 			
 			}
-			
 			
 			if( event.type == SDL_KEYDOWN )
 			{
@@ -261,16 +239,14 @@ int main()
         // Lock the screen surface and clear it, then do drawing 
         //SDL_LockSurface(gwin.screen);
         //depth++;
-		SDL_GetMouseState(&x, &y);
+		SDL_GetMouseState(&mousex, &mousey);
 		
-
+		
 		gwin.clear();
+		// START DRAWING
 
         drawDividers(gwin.screen);
                 
-        // Draw the tilemap
-        map.draw(gwin.screen, 1, 1);
-        //tmptile.draw(gwin.screen, 0, 0);
         
 		basicfont.resize(10);
 		itoa(depth, msgbuffer, 10);
@@ -285,18 +261,24 @@ int main()
 		basicfont.drawstr(gwin.screen, 452, 180, 224, 202, 31, (string)"COINS: " + (string)msgbuffer);
 		
 		
-		inventoryButton.graphicsUpdate(gwin.screen);
 		
+		map.draw(gwin.screen);
+		pix::put_pixel16(gwin.screen, (float)xx*delta, (float)yy*delta, 255, 0, 0);
+		//cout << delta << endl;
+		inventoryButton.graphicsUpdate(gwin.screen);
+		pix::rasterCircle(100, 100, 60, gwin.screen);
+		
+		// END DRAWING
 		if(debugmode == true)
 		{
 			basicfont.drawstr(gwin.screen, 2, 0, 255, 0, 255, "DEBUG MONITOR");
 			// Mouse Pos
 			debugmessage.clear();
 			debugmessage = "MPOS: ";
-			itoa(x, buffer, 10);
+			itoa(mousex, buffer, 10);
 			debugmessage += buffer; 
 			debugmessage += ", ";
-			itoa(y, buffer, 10);
+			itoa(mousey, buffer, 10);
 			debugmessage += buffer;
 			basicfont.drawstr(gwin.screen, 2, 20, 255, 0, 255, debugmessage);
 			
@@ -307,6 +289,23 @@ int main()
 			itoa(fps, buffer, 10);
 			debugmessage += buffer;
 			basicfont.drawstr(gwin.screen, 2, 30, 255, 0, 255, debugmessage);
+			
+			// Frame Time
+			debugmessage.clear();
+			debugmessage = "FRAMET: ";
+			
+			itoa((int)(frametime), buffer, 10);
+			debugmessage += buffer;
+			basicfont.drawstr(gwin.screen, 2, 40, 255, 0, 255, debugmessage);
+			
+			// Delta
+			debugmessage.clear();
+			debugmessage = "DELTA (x1000): ";
+			
+			itoa((int)(delta*1000), buffer, 10);
+			debugmessage += buffer;
+			basicfont.drawstr(gwin.screen, 2, 50, 255, 0, 255, debugmessage);
+			
 		}
 		
 		if(devmode == true)
@@ -323,43 +322,39 @@ int main()
 
 		}
         
+		
         // Unlock screen surface so we can update the screen
         //SDL_UnlockSurface(gwin.screen);
 		
         // update screen
 		
-		//for(int p = 0; p < 50; p++)
-		{
-			//for(int l = 0; l < 50; l++)
-			{
-				//pix::put_pixel16(gwin.screen, p, l, r, g, b);
-			
-			}
-		
-		}
-		
-		pix::put_pixel16(gwin.screen, (float)xx*delta, (float)yy*delta, 255, 0, 0);
-		cout << delta << endl;
-		r !=0 ? r-=1 : 0;
-		g !=0 ? g-=1 : 0;
-		b !=0 ? b-=1 : 0;
-		
-		
         gwin.update();
-		SDL_Delay(10);
-		
 		xx+=10;
 		yy+=10;
-
-		++frames;
+		
+		SDL_Delay(10); // Reduce CPU usage
+		// FPS Calculation
 		if(debugmode == true)
 		{
 			fps = ((float)1000/(float)frametime);
 		}
+		++frames;
 		
+		// Timer based movement with smoothing system
 		frametime = (float)((SDL_GetTicks() - startTime));
-		delta = frametime/1000; 
-
+		//frametimes[frametimesindex] = frametime;
+		//if(frametimesindex == 20)
+		{
+			//frametimesindex = 0;
+			//for(int av = 0; av < 20; av++)
+			{
+				//averageframetime += frametimes[av];
+			}
+			//averageframetime /= 20;
+			//delta = averageframetime/1000;
+		}
+		delta = frametime/1000;
+		//frametimesindex++;
 		startTime = SDL_GetTicks();
 		
 		
