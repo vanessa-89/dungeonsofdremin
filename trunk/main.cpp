@@ -62,9 +62,24 @@ void drawDividers(SDL_Surface* sur)
 
 }
 
-void testfunc()
+void openInventory()
 {
-	cout << "test" << endl;
+	static bool open;
+	if(open == false)
+	{
+		cout << "Inventory Opened." << endl;
+		open = true;
+	}
+	else
+	{
+		cout << "Inventory Closed." << endl;
+		open = false;
+		return;
+	}
+	
+	
+	
+	return;
 }
 
 
@@ -78,7 +93,7 @@ int main()
     //SDL_ShowCursor(0); // Hide courser
     cout << "Opening Window..." << endl;
     pix::window gwin;
-    gwin.open(640, 480, 16, true);
+    gwin.open(640, 480, 16, false);
     cout << endl;	
 	
     SDL_Event event;
@@ -137,7 +152,7 @@ int main()
 	
 	// Dev data
 	bool devmode = false;
-	sgui::button inventoryButton(450, 450, 639, 479, 0, 0, 255, "INVENTORY", 12, 255, 0, 0, &testfunc, &basicfont);
+	sgui::button inventoryButton(450, 450, 639, 479, 0, 0, 255, "INVENTORY", 12, 255, 0, 0, &openInventory, &basicfont);
 	
 	// Game Data
 	int mousex = 0;

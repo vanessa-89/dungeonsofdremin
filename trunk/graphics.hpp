@@ -247,17 +247,18 @@ namespace pix
 			int x = 0;
 			int y = radius;
 			
-			//put_pixel16(sur, x0, y0 + radius, 255, 0, 0);
 			
-			rasterLine(x0 + radius, y0 + radius, x0 - radius, y0 - radius, sur);
-			rasterLine(x0 - radius, y0 + radius, x0 + radius, y0 + radius, sur);
+			//rasterLine(x0, y0 + radius, x0, y0 - radius, sur);
+			//rasterLine(x0 + radius, y0, x0 - radius, y0, sur);
 			
 			//cin.get();
 			//cin.get();
 			
-			//put_pixel16(sur, x0, y0 - radius, 255, 0, 0);
-			//put_pixel16(sur, x0 + radius, y0, 255, 0, 0);
-			//put_pixel16(sur, x0 - radius, y0, 255, 0, 0);
+			// Put a pixel at each side of the circle
+			put_pixel16(sur, x0, y0 + radius, 255, 0, 0);
+			put_pixel16(sur, x0, y0 - radius, 255, 0, 0);
+			put_pixel16(sur, x0 + radius, y0, 255, 0, 0);
+			put_pixel16(sur, x0 - radius, y0, 255, 0, 0);
 		 
 			while(x < y)
 			{
@@ -274,20 +275,27 @@ namespace pix
 				ddF_x += 2;
 				f += ddF_x;
 				
-				//rasterLine(x0 + x, y0 + y, x0 - x, y0 + y, sur);
 				//rasterLine(x0 + x, y0 - y, x0 - x, y0 + y, sur);
+				//rasterLine(x0 + x, y0 + y, x0 - x, y0 + y, sur);
 				//rasterLine(x0 + x, y0 + y, x0 - x, y0 + y, sur);
 				//rasterLine(x0 + x, y0 - y, x0 - x, y0 - y, sur);
 				
+				// Draw sides
+				
+				// Left
 				put_pixel16(sur, x0 + x, y0 + y, 255, 0, 0);
 				put_pixel16(sur, x0 - x, y0 + y, 255, 0, 0);
 				
+				// Right
 				put_pixel16(sur, x0 + x, y0 - y, 255, 0, 0);
 				put_pixel16(sur, x0 - x, y0 - y, 255, 0, 0);
 				
+				
+				// Top
 				put_pixel16(sur, x0 + x, y0 + y, 255, 0, 0);
 				put_pixel16(sur, x0 - x, y0 + y, 255, 0, 0);
 				
+				// Bottom
 				put_pixel16(sur, x0 + x, y0 - y, 255, 0, 0);
 				put_pixel16(sur, x0 - x, y0 - y, 255, 0, 0);
 
