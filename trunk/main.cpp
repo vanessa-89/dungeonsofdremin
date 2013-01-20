@@ -88,7 +88,11 @@ int main()
     cout << "Rougelike Game" << endl;
     cout << endl;
     cout << "Starting SDL..." << endl;
+	
+	vector<pix::point> dat;
 
+	
+ 	
     SDL_Init(SDL_INIT_EVERYTHING);
     //SDL_ShowCursor(0); // Hide courser
     cout << "Opening Window..." << endl;
@@ -147,7 +151,7 @@ int main()
 	float frametime = 0;
 	float delta = 0;
 	float averageframetime;
-	float frametimes[20];
+	float frametimes[60];
 	int frametimesindex = 0;
 	
 	// Dev data
@@ -168,14 +172,14 @@ int main()
 		for(int fy = 0; fy < 16; fy++)
 		{
 			tdat->data[fx][fy].r = 255;
-			tdat->data[fx][fy].g = 255;
-			tdat->data[fx][fy].b = 255;
+			tdat->data[fx][fy].g = 0;
+			tdat->data[fx][fy].b = fx*16;
 			tdat->data[fx][fy].alpha = false;
 		}
 	}
-	tdat->data[0][0].r = 255;
-	tdat->data[0][0].g = 0;
-	tdat->data[0][0].b = 0;
+	//tdat->data[0][0].r = 255;
+	//tdat->data[0][0].g = 0;
+	//tdat->data[0][0].b = 0;
 	
 	map.writeTile(tdat, 20, 10);
 	map.writeTile(tdat, 10, 10);
@@ -231,7 +235,6 @@ int main()
 				}
 				if(keystates[SDLK_F2])
 				{
-					/*
 					if(debugmode == true)
 					{
 						debugmode = false;
@@ -244,7 +247,7 @@ int main()
 					{
 						devmode = true;
 					}
-					*/
+					
 				}
 				
 			}
@@ -281,7 +284,15 @@ int main()
 		pix::put_pixel16(gwin.screen, (float)xx*delta, (float)yy*delta, 255, 0, 0);
 		//cout << delta << endl;
 		inventoryButton.graphicsUpdate(gwin.screen);
-		pix::rasterCircle(100, 100, 60, gwin.screen);
+		
+
+		//pix::rasterCircle(100, 100, 60, gwin.screen, 255, 0, 0);
+		rasterCircleData(0,0,20, dat);
+		for(int x = 0; x < dat.size(); x++)
+		{
+			pix::put_pixel16(gwin.screen, dat[x].x+50, dat[x].y+50, 255, 0, 0);
+		}
+		
 		
 		// END DRAWING
 		if(debugmode == true)
@@ -328,9 +339,9 @@ int main()
 			basicfont.drawstr(gwin.screen, 2, 0, 255, 0, 255, "DEV CONSOLE");
 			basicfont.drawstr(gwin.screen, 2, 10, 255, 0, 255, ">");
 			
-			while(keystates[SDLK_RETURN] != true)
+			//while(keystates[SDLK_RETURN] != true)
 			{
-				keystates = SDL_GetKeyState( NULL ); // Update keystates
+				//keystates = SDL_GetKeyState( NULL ); // Update keystates
 				//for(int k = 0; k < )
 			
 			}
@@ -342,12 +353,11 @@ int main()
         //SDL_UnlockSurface(gwin.screen);
 		
         // update screen
-		
         gwin.update();
 		xx+=10;
 		yy+=10;
 		
-		SDL_Delay(10); // Reduce CPU usage
+		SDL_Delay(2); // Reduce CPU usage
 		// FPS Calculation
 		if(debugmode == true)
 		{
@@ -357,27 +367,28 @@ int main()
 		
 		// Timer based movement with smoothing system
 		frametime = (float)((SDL_GetTicks() - startTime));
-		//frametimes[frametimesindex] = frametime;
-		//if(frametimesindex == 20)
+		frametimes[frametimesindex] = frametime;
+		//delta = frametime/1000;
+		frametimesindex++;
+		
+		if(frametimesindex == 60)
 		{
-			//frametimesindex = 0;
-			//for(int av = 0; av < 20; av++)
+			frametimesindex = 0;
+			averageframetime = 0;
+			for(int av = 0; av < 60; av++)
 			{
-				//averageframetime += frametimes[av];
+				averageframetime += frametimes[av];
 			}
-			//averageframetime /= 20;
-			//delta = averageframetime/1000;
+			averageframetime /= 60;
+			delta = averageframetime/1000;
 		}
-		delta = frametime/1000;
-		//frametimesindex++;
+		// Reset starttime for the next frame
 		startTime = SDL_GetTicks();
-		
-		
 
     }
 
     SDL_Quit();
-        cout << "Clean up complete, ending." << endl;
-        exit(0);
+    cout << "Clean up complete, exiting." << endl;
+    exit(0);
 
 }
